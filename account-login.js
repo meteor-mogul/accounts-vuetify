@@ -2,11 +2,11 @@
 // Select which component to display depending on state
 
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import { Vue } from 'meteor/meteormogul:vue-dist';
 import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
 import { displayName, getLoginServices } from './helpers.js';
+import { Accounts } from './account-session.js';
 import { meteormogulLoggedIn } from './account-in.js';
 import { meteormogulLoggedOutWithServices,
          meteormogulLoggedOutNoServices } from './account-out.js';

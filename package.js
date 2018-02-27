@@ -18,6 +18,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.6.1');
   api.use('ecmascript');
+  api.use('accounts-base@1.4.1','client');
   api.imply('accounts-base@1.4.1', ['client', 'server']);
   api.use('accounts-password@1.5.0', {weak: true});
 

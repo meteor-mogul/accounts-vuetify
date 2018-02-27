@@ -1,18 +1,20 @@
 // Meteor Mogul account template to show when already logged in
+var MMDEBUG = true;
 
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import { Vue } from 'meteor/meteormogul:vue-dist';
 import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
+import { Accounts } from './account-session.js';
 import { displayName } from './helpers.js';
 
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
-var loginButtonsSession = Accounts._loginButtonsSession;
+MMDEBUG && console.log("Accounts", Accounts);
 
-var MMDEBUG = true;
+loginButtonsSession = Accounts._loginButtonsSession;
+
 
 var meteormogulLoggedIn = Vue.component('logged-in',
 {
@@ -34,6 +36,7 @@ var meteormogulLoggedIn = Vue.component('logged-in',
       },
       dropdownVisible: {
         update() {
+          MMDEBUG && console.log("loginButtonsSession", loginButtonsSession);
           return loginButtonsSession.get('dropdownVisible');
         }
       },
