@@ -1,0 +1,39 @@
+<body>
+  <script type="text/x-template" id="logged-in-template">
+    <div class="login-link-and-dropdown-list">
+      <a class="login-link-text" id="login-name-link" @click="showDropdown">
+        {{displayName}} ▾
+      </a>
+
+      <div v-if="dropdownVisible">
+        <div id="login-dropdown-list" class="accounts-dialog">
+          <a class="login-close-text" @click="hideDropdown">Close</a>
+          <div class="login-close-text-clear"></div>
+          <div v-if="inMessageOnlyFlow">
+            <login-messages></login-messages>
+          </div>
+          <div v-else>
+            <div v-if="inChangePasswordFlow">
+              <change-password></change-password>
+            </div>
+            <div v-else>
+              <logged-in-actions></logged-in-actions>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="login-messages-template">
+    <div>login messages</div>
+  </script>
+
+  <script type="text/x-template" id="change-password-template">
+    <div>change password</div>
+  </script>
+
+  <script type="text/x-template" id="logged-in-actions-template">
+    <div>logged in actions</div>
+  </script>
+</body>
