@@ -17,13 +17,34 @@ var meteormogulLoggedOutWithServices = Vue.component('logged-out-with-services',
 {
   name: 'logged-out-with-services',
   template: '#logged-out-with-services-template',
-  data: () => ({
-    drawer: null
-  }),
-  props: {
-    source: String
+  data: function () {
+    return {
+      dropdownVisible: true,
+      loggingIn: false
+    };
+  },
+  meteor: {
+    loggingIn: {
+      update() {
+        return Meteor.loggingIn();
+      }
+    },
+    dropdownVisible: {
+      update() {
+        return loginButtonsSession.get('dropdownVisible');
+      }
+    }
+  },
+  methods: {
+    showDropdown: function () {
+      MMDEBUG && console.log('showDropdown');
+      loginButtonsSession.set('dropdownVisible', true);
+    },
+    hideDropdown: function () {
+      MMDEBUG && console.log('closeDropdown');
+      loginButtonsSession.closeDropdown();
+    }
   }
-
 });
 
 var meteormogulLoggedOutNoServices = Vue.component('logged-out-no-services',

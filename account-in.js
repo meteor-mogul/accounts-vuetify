@@ -11,10 +11,7 @@ import { displayName } from './helpers.js';
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
-MMDEBUG && console.log("Accounts", Accounts);
-
 loginButtonsSession = Accounts._loginButtonsSession;
-
 
 var meteormogulLoggedIn = Vue.component('logged-in',
 {

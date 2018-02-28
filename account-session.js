@@ -1,3 +1,17 @@
+// Keep track of login state using Accounts._loginButtonsSession
+// Depends on Session from meteor/session
+
+/* Why does import Session trigger the following error?
+
+[Vue warn]: Error in created hook: "TypeError: Cannot read property 'get' of undefined"
+
+found in
+
+---> <AccountLogin>
+       <Root>
+
+import { Session } from 'meteor/session';
+*/
 import { Accounts } from 'meteor/accounts-base';
 
 var VALID_KEYS = [

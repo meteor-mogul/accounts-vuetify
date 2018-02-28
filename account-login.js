@@ -1,6 +1,8 @@
 // Meteor Mogul account login selector
 // Select which component to display depending on state
 
+var MMDEBUG = true;
+
 import { Meteor } from 'meteor/meteor';
 import { Vue } from 'meteor/meteormogul:vue-dist';
 import VueMeteorTracker from 'vue-meteor-tracker';
@@ -14,7 +16,7 @@ import { meteormogulLoggedOutWithServices,
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
-var MMDEBUG = true;
+loginButtonsSession = Accounts._loginButtonsSession;
 
 meteormogulAccountLogin = Vue.component('account-login',
 {
@@ -25,7 +27,8 @@ meteormogulAccountLogin = Vue.component('account-login',
       configurationLoaded: false,
       currentUser: null,
       displayName: null,
-      loginServices: 0
+      loginServices: 0,
+      dropdownVisible: false
     };
   },
   meteor: {
@@ -56,6 +59,11 @@ meteormogulAccountLogin = Vue.component('account-login',
         MMDEBUG && console.log('getLoginServices');
         return getLoginServices().length;
       }
+    },
+    dropdownVisible: {
+      update() {
+        return loginButtonsSession.get('dropdownVisible');
+      }
     }
   }
 }
@@ -71,7 +79,8 @@ var _meteormogulLoginSelector = Vue.component('login-selector',
     'configurationLoaded',
     'currentUser',
     'displayName',
-    'loginServices'
+    'loginServices',
+    'dropdownVisible'
   ],
   render: function (createElement, context) {
     function selectComponent(currentUser,loginServices) {
@@ -103,7 +112,8 @@ var _meteormogulLoginSelector = Vue.component('login-selector',
             configurationLoaded: context.props.configurationLoaded,
             currentUser: context.props.currentUser,
             displayName: context.props.displayName,
-            loginServices: context.props.loginServices
+            loginServices: context.props.loginServices,
+            dropdownVisible: context.props.dropdownVisible
           }
         },
         context.children

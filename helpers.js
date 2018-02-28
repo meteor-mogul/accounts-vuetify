@@ -1,7 +1,7 @@
 // Helper functions for Meteor Mogul accounts
 
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import { Accounts } from './account-session.js';
 
 // Blank if no user, otherwise figure out how to display name of user.
 var displayName = function () {
@@ -48,4 +48,158 @@ var getLoginServices = function () {
   });
 };
 
-export { displayName, getLoginServices };
+var elementValueById = function(id) {
+  var element = document.getElementById(id);
+  if (!element)
+    return null;
+  else
+    return element.value;
+};
+
+var trimmedElementValueById = function(id) {
+  var element = document.getElementById(id);
+  if (!element)
+    return null;
+  else
+    return element.value.replace(/^\s*|\s*$/g, ""); // trim() doesn't work on IE8;
+};
+
+var login = function () {
+  MMDEBUG && console.log('login');
+  loginButtonsSession.resetMessages();
+
+  var username = trimmedElementValueById('login-username');
+  var email = trimmedElementValueById('login-email');
+  var usernameOrEmail = trimmedElementValueById('login-username-or-email');
+  // notably not trimmed. a password could (?) start or end with a space
+  var password = elementValueById('login-password');
+
+  var loginSelector;
+  if (username !== null) {
+    if (!validateUsername(username))
+      return;
+    else
+      loginSelector = {username: username};
+  } else if (email !== null) {
+    if (!validateEmail(email)) {
+      loginButtonsSession.errorMessage("Invalid email");
+      throw new Error("Invalid email");
+    } else {
+      loginSelector = {username: email};
+    }
+  } else if (usernameOrEmail !== null) {
+    // XXX not sure how we should validate this. but this seems good enough (for now),
+    // since an email must have at least 3 characters anyways
+    if (!validateUsername(usernameOrEmail))
+      return;
+    else
+      loginSelector = {username: usernameOrEmail};
+  } else {
+    throw new Error("Unexpected -- no element to use as a login user selector");
+  }
+
+  Meteor.loginWithPassword(loginSelector, password, function (error, result) {
+    if (error) {
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");
+    } else {
+      loginButtonsSession.closeDropdown();
+    }
+  });
+};
+
+var signup = function () {
+  loginButtonsSession.resetMessages();
+
+  var options = {}; // to be passed to Accounts.createUser
+
+  var username = trimmedElementValueById('login-username');
+  if (username !== null) {
+    if (!validateUsername(username))
+      return;
+    else
+      options.username = username;
+  }
+
+  var email = trimmedElementValueById('login-email');
+  if (email !== null) {
+    if (!validateEmail(email))
+      return;
+    else
+      options.email = email;
+  }
+
+  // notably not trimmed. a password could (?) start or end with a space
+  var password = elementValueById('login-password');
+  if (!validatePassword(password))
+    return;
+  else
+    options.password = password;
+
+  if (!matchPasswordAgainIfPresent())
+    return;
+
+  Accounts.createUser(options, function (error) {
+    if (error) {
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");
+    } else {
+      loginButtonsSession.closeDropdown();
+    }
+  });
+};
+
+var forgotPassword = function () {
+  loginButtonsSession.resetMessages();
+
+  var email = trimmedElementValueById("forgot-password-email");
+  if (email.indexOf('@') !== -1) {
+    Accounts.forgotPassword({email: email}, function (error) {
+      if (error)
+        loginButtonsSession.errorMessage(error.reason || "Unknown error");
+      else
+        loginButtonsSession.infoMessage("Email sent");
+    });
+  } else {
+    loginButtonsSession.errorMessage("Invalid email");
+  }
+};
+
+var changePassword = function () {
+  loginButtonsSession.resetMessages();
+
+  // notably not trimmed. a password could (?) start or end with a space
+  var oldPassword = elementValueById('login-old-password');
+
+  // notably not trimmed. a password could (?) start or end with a space
+  var password = elementValueById('login-password');
+  if (!validatePassword(password))
+    return;
+
+  if (!matchPasswordAgainIfPresent())
+    return;
+
+  Accounts.changePassword(oldPassword, password, function (error) {
+    if (error) {
+      loginButtonsSession.errorMessage(error.reason || "Unknown error");
+    } else {
+      loginButtonsSession.set('inChangePasswordFlow', false);
+      loginButtonsSession.set('inMessageOnlyFlow', true);
+      loginButtonsSession.infoMessage("Password changed");
+    }
+  });
+};
+
+var matchPasswordAgainIfPresent = function () {
+  // notably not trimmed. a password could (?) start or end with a space
+  var passwordAgain = elementValueById('login-password-again');
+  if (passwordAgain !== null) {
+    // notably not trimmed. a password could (?) start or end with a space
+    var password = elementValueById('login-password');
+    if (password !== passwordAgain) {
+      loginButtonsSession.errorMessage("Passwords don't match");
+      return false;
+    }
+  }
+  return true;
+};
+
+export { displayName, getLoginServices, login, signup };

@@ -18,8 +18,7 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.6.1');
   api.use('ecmascript');
-  api.use('accounts-base@1.4.1','client');
-  api.imply('accounts-base@1.4.1', ['client', 'server']);
+  api.imply(['accounts-base@1.4.1','session@1.1.7'], ['client', 'server']);
   api.use('accounts-password@1.5.0', {weak: true});
 
   // Allow us to use VueJS components on the client
@@ -27,6 +26,9 @@ Package.onUse(function(api) {
 
   // Don't compile Blaze templates in .html files
   api.use('static-html@1.2.2', 'client');
+
+  // Material Design icons
+  api.use('zodiase:material-design-icons-fonts@3.0.1','client');
 
   api.addFiles([
     'account-in.html',
