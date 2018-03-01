@@ -1,5 +1,11 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.5] - 2018-03-01
+
+- Added style for logging in.
+- Use dialog for logging in form.
+- Added methods to loginButtonsLoggedOutWithServices
+
 ## [0.0.4] - 2018-02-28
 
 - Fixed dates in CHANGELOG.  It's February not January!

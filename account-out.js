@@ -20,19 +20,26 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
   template: '#logged-out-with-services-template',
   data: function () {
     return {
-      dropdownVisible: true,
-      loggingIn: false
+      dropdownVisible: false,
+      loggingIn: false,
+      inCreateAccountFlow: false
     };
   },
   meteor: {
     loggingIn: {
       update() {
-        return Meteor.loggingIn();
+        return this.loggingIn;
+        // return Meteor.loggingIn();
       }
     },
     dropdownVisible: {
       update() {
         return loginButtonsSession.get('dropdownVisible');
+      }
+    },
+    inCreateAccountFlow: {
+      update() {
+        return loginButtonsSession.get('inCreateAccountFlow');
       }
     }
   },
@@ -44,6 +51,22 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
     hideDropdown: function () {
       MMDEBUG && console.log('closeDropdown');
       loginButtonsSession.closeDropdown();
+    },
+    login: function () {
+      MMDEBUG && console.log('login');
+      this.loggingIn = !this.loggingIn;
+    },
+    createAccount: function () {
+      MMDEBUG && console.log('create account');
+      loginButtonsSession.set('inCreateAccountFlow', true);
+    },
+    confirmAccount: function () {
+      MMDEBUG && console.log('confirm account');
+      loginButtonsSession.closeDropdown();
+    },
+    cancelAccount: function () {
+      MMDEBUG && console.log('cancel account');
+      loginButtonsSession.set('inCreateAccountFlow', false);
     }
   }
 });

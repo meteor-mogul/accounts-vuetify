@@ -1,6 +1,6 @@
 Package.describe({
   name: 'meteormogul:accounts-vuetify',
-  version: '0.0.2',
+  version: '0.0.5',
   // Brief, one-line summary of the package.
   summary: 'Accounts for Meteor Mogul using vuetify.',
   // URL to the Git repository containing the source code for this package.
@@ -33,6 +33,7 @@ Package.onUse(function(api) {
   api.use('zodiase:material-design-icons-fonts@3.0.1','client');
 
   api.addFiles([
+    'accounts-vuetify.css',
     'account-components.html',
     'account-in.html',
     'account-out.html',

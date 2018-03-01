@@ -3,40 +3,48 @@
     <div id="account">
       <v-app id="login">
         <v-content>
-          <v-container v-if="dropdownVisible" fluid fill-height>
-            <v-layout align-center justify-center>
-              <v-flex xs12 sm8 md4>
-                <v-card class="elevation-12">
-                  <v-toolbar dark color="primary">
-                    <v-btn icon @click.native="hideDropdown()" dark>
-                      <v-icon>close</v-icon>
-                    </v-btn>
-                    <v-toolbar-title>Login or Sign Up</v-toolbar-title>
-                  </v-toolbar>
-                  <v-card-text>
-                    <v-form>
-                      <v-text-field prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
-                      <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
-                    </v-form>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary">Login</v-btn> or <v-btn color="primary">Create New Account</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <v-container v-else>
-            <div v-if="loggingIn">
+          <v-btn dark v-on:click="showDropdown">Login or Sign Up</v-btn>
+          <v-dialog v-model="dropdownVisible" max-width="500px">
+            <v-card class="elevation-12">
+              <v-toolbar dark color="primary">
+                <v-btn icon @click.native="hideDropdown()" dark>
+                  <v-icon>close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Login or Sign Up</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
+                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
+                  <div v-if="inCreateAccountFlow">
+                    <v-text-field prepend-icon="lock" name="password" label="Confirm Password" id="password2" type="password"></v-text-field>
+                  </div>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <div v-if="inCreateAccountFlow">
+                    <v-btn color="primary" @click="confirmAccount()">Create Account</v-btn>
+                    <v-btn color="cancel" @click="cancelAccount()">Cancel</v-btn>
+                </div>
+                <div v-else>
+                    <v-btn color="primary" @click="login()">Login</v-btn> or
+                    <v-btn color="primary" @click="createAccount()">Create New Account</v-btn>
+                </div>
+              </v-card-actions>
+              <div v-if="loggingIn">
+                  <div>
+                    <div class="loading login-buttons-padding">&nbsp;</div>
+                </div>
+              </div>
+            </v-card>
+          </v-dialog>
+          <div v-if="loggingIn && !dropdownVisible">
               <!-- Not normally visible, but if the user closes the dropdown during login. -->
-              <!-- <login-buttons-logging-in></login-buttons-logging-in> -->
-              login-buttons-logging-in
+              <div>
+                <div class="loading login-buttons-padding">&nbsp;</div>
             </div>
-            <div v-else>
-              <v-btn dark v-on:click="showDropdown">Login or Sign Up</v-btn>
-            </div>
-          </v-container>
+          </div>
         </v-content>
       </v-app>
     </div>
