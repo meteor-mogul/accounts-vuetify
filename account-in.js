@@ -7,13 +7,14 @@ import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
 import { Accounts } from './account-session.js';
 import { displayName } from './helpers.js';
+import { loginButtonsMessages } from './account-components.js';
 
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
 loginButtonsSession = Accounts._loginButtonsSession;
 
-var meteormogulLoggedIn = Vue.component('logged-in',
+var loginButtonsLoggedIn = Vue.component('logged-in',
 {
   name: 'logged-in',
   template: "#logged-in-template",
@@ -61,21 +62,14 @@ var meteormogulLoggedIn = Vue.component('logged-in',
 }
 );
 
-var _meteormogulLoginMessages = Vue.component('login-messages',
-{
-  name: 'login-messages',
-  template: "#login-messages-template"
-}
-);
-
-var _meteormogulChangePassword = Vue.component('change-password',
+var _loginButtonsChangePassword = Vue.component('change-password',
 {
   name: 'change-password',
   template: "#change-password-template"
 }
 );
 
-var _meteormogulLoggedInActions = Vue.component('logged-in-actions',
+var _loginButtonsInActions = Vue.component('logged-in-actions',
 {
   name: 'logged-in-actions',
   template: "#logged-in-actions-template"

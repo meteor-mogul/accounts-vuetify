@@ -1,6 +1,6 @@
 Package.describe({
   name: 'meteormogul:accounts-vuetify',
-  version: '0.0.1',
+  version: '0.0.2',
   // Brief, one-line summary of the package.
   summary: 'Accounts for Meteor Mogul using vuetify.',
   // URL to the Git repository containing the source code for this package.
@@ -18,7 +18,9 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.6.1');
   api.use('ecmascript');
-  api.imply(['accounts-base@1.4.1','session@1.1.7'], ['client', 'server']);
+  api.use('accounts-base@1.4.1');
+  api.imply('accounts-base@1.4.1');
+  api.imply('session@1.1.7');
   api.use('accounts-password@1.5.0', {weak: true});
 
   // Allow us to use VueJS components on the client
@@ -31,9 +33,11 @@ Package.onUse(function(api) {
   api.use('zodiase:material-design-icons-fonts@3.0.1','client');
 
   api.addFiles([
+    'account-components.html',
     'account-in.html',
     'account-out.html',
     'account-login.html',
+    'account-components.js',
     'account-in.js',
     'account-out.js',
     'account-login.js'

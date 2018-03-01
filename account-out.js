@@ -7,13 +7,14 @@ import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
 import { Accounts } from './account-session.js';
 import { getLoginServices } from './helpers.js';
+import { loginButtonsMessages } from './account-components.js';
 
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
 var loginButtonsSession = Accounts._loginButtonsSession;
 
-var meteormogulLoggedOutWithServices = Vue.component('logged-out-with-services',
+var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services',
 {
   name: 'logged-out-with-services',
   template: '#logged-out-with-services-template',
@@ -47,10 +48,10 @@ var meteormogulLoggedOutWithServices = Vue.component('logged-out-with-services',
   }
 });
 
-var meteormogulLoggedOutNoServices = Vue.component('logged-out-no-services',
+var loginButtonsLoggedOutNoServices = Vue.component('logged-out-no-services',
 {
   name: 'logged-out-no-services',
   template: '#logged-out-no-services-template'
 });
 
-export { meteormogulLoggedOutWithServices, meteormogulLoggedOutNoServices };
+export { loginButtonsLoggedOutWithServices, loginButtonsLoggedOutNoServices };

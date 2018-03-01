@@ -1,5 +1,5 @@
 // Meteor Mogul account login selector
-// Select which component to display depending on state
+// Select which account login component to display depending on state
 
 var MMDEBUG = true;
 
@@ -9,16 +9,17 @@ import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
 import { displayName, getLoginServices } from './helpers.js';
 import { Accounts } from './account-session.js';
-import { meteormogulLoggedIn } from './account-in.js';
-import { meteormogulLoggedOutWithServices,
-         meteormogulLoggedOutNoServices } from './account-out.js';
+import { loginButtonsMessages } from './account-components.js';
+import { loginButtonsLoggedIn } from './account-in.js';
+import { loginButtonsLoggedOutWithServices,
+         loginButtonsLoggedOutNoServices } from './account-out.js';
 
 Vue.use(VueMeteorTracker);
 Vue.use(Vuetify);
 
 loginButtonsSession = Accounts._loginButtonsSession;
 
-meteormogulAccountLogin = Vue.component('account-login',
+LoginButtons = Vue.component('account-login',
 {
   name: 'account-login',
   template: '#account-login-template',
@@ -28,7 +29,8 @@ meteormogulAccountLogin = Vue.component('account-login',
       currentUser: null,
       displayName: null,
       loginServices: 0,
-      dropdownVisible: false
+      dropdownVisible: false,
+      inCreateAccountFlow: false
     };
   },
   meteor: {
@@ -64,14 +66,19 @@ meteormogulAccountLogin = Vue.component('account-login',
       update() {
         return loginButtonsSession.get('dropdownVisible');
       }
+    },
+    inCreateAccountFlow: {
+      update() {
+        return loginButtonsSession.get('inCreateAccountFlow');
+      }
     }
   }
 }
 );
 
-// _meteormogulLoginSelector is a functional Vue component that
+// _loginButtonsSelector is a functional Vue component that
 // selects which template to display based on Meteor.user()
-var _meteormogulLoginSelector = Vue.component('login-selector',
+var _loginButtonsSelector = Vue.component('login-selector',
 {
   name: 'login-selector',
   functional: true,
@@ -80,25 +87,26 @@ var _meteormogulLoginSelector = Vue.component('login-selector',
     'currentUser',
     'displayName',
     'loginServices',
-    'dropdownVisible'
+    'dropdownVisible',
+    'inCreateAccountFlow'
   ],
   render: function (createElement, context) {
     function selectComponent(currentUser,loginServices) {
       MMDEBUG && console.log('selecting login component');
+      MMDEBUG && console.log('current user', currentUser);
       if (currentUser) {
         // We're already logged in.
-        MMDEBUG && console.log('current user', currentUser);
-        return meteormogulLoggedIn;
+        return loginButtonsLoggedIn;
       } else {
         MMDEBUG && console.log('no current user');
         // Check to see if we have any login login services
         if (loginServices) {
           // Yes, we have login services.
-          MMDEBUG && console.log('logged out with services', meteormogulLoggedOutWithServices);
-          return meteormogulLoggedOutWithServices;
+          MMDEBUG && console.log('logged out with services', loginButtonsLoggedOutWithServices);
+          return loginButtonsLoggedOutWithServices;
         } else {
-          MMDEBUG && console.log('logged out no services', meteormogulLoggedOutNoServices);
-          return meteormogulLoggedOutNoServices;
+          MMDEBUG && console.log('logged out no services', loginButtonsLoggedOutNoServices);
+          return loginButtonsLoggedOutNoServices;
         }
       }
     }
@@ -113,7 +121,8 @@ var _meteormogulLoginSelector = Vue.component('login-selector',
             currentUser: context.props.currentUser,
             displayName: context.props.displayName,
             loginServices: context.props.loginServices,
-            dropdownVisible: context.props.dropdownVisible
+            dropdownVisible: context.props.dropdownVisible,
+            inCreateAccountFlow: context.props.inCreateAccountFlow
           }
         },
         context.children
@@ -122,4 +131,4 @@ var _meteormogulLoginSelector = Vue.component('login-selector',
 }
 );
 
-export { meteormogulAccountLogin };
+export { LoginButtons };

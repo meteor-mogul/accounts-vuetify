@@ -1,7 +1,7 @@
 <body>
   <script type="text/x-template" id="logged-out-with-services-template">
-    <div id="app">
-      <v-app id="inspire">
+    <div id="account">
+      <v-app id="login">
         <v-content>
           <v-container v-if="dropdownVisible" fluid fill-height>
             <v-layout align-center justify-center>
@@ -11,17 +11,17 @@
                     <v-btn icon @click.native="hideDropdown()" dark>
                       <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Login form</v-toolbar-title>
+                    <v-toolbar-title>Login or Sign Up</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-form>
-                      <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
+                      <v-text-field prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
                       <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary">Login</v-btn>
+                    <v-btn color="primary">Login</v-btn> or <v-btn color="primary">Create New Account</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-flex>
@@ -34,7 +34,7 @@
               login-buttons-logging-in
             </div>
             <div v-else>
-              <a class="login-link-text" id="login-sign-in-link" v-on:click="showDropdown">Sign in ▾</a>
+              <v-btn dark v-on:click="showDropdown">Login or Sign Up</v-btn>
             </div>
           </v-container>
         </v-content>
@@ -43,6 +43,12 @@
   </script>
 
   <script type="text/x-template" id="logged-out-no-services-template">
-    <div>logged out no services</div>
+    <div id="account">
+      <v-app id="login">
+        <v-content>
+          <v-btn dark>Login Unavailable</v-btn>
+        </v-content>
+      </v-app>
+    </div>
   </script>
 </body>

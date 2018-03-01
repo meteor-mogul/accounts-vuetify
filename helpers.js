@@ -3,6 +3,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from './account-session.js';
 
+loginButtonsSession = Accounts._loginButtonsSession;
+
 // Blank if no user, otherwise figure out how to display name of user.
 var displayName = function () {
   var user = Meteor.user();
