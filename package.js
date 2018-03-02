@@ -11,8 +11,7 @@ Package.describe({
 });
 
 Npm.depends({
-  'vue-meteor-tracker': '1.2.3',
-  'vuetify': '1.0.3'
+  'vue-meteor-tracker': '1.2.3'
 });
 
 Package.onUse(function(api) {
@@ -27,11 +26,14 @@ Package.onUse(function(api) {
   // Allow us to use VueJS components on the client
   api.use('meteormogul:vue-dist@2.5.15', 'client');
 
+  // Allow us to Vuetify VueJS components on the client
+  api.use('meteormogul:vuetify-dist@1.0.4', 'client');
+
   // Don't compile Blaze templates in .html files
   api.use('static-html@1.2.2', 'client');
 
   // Material Design icons
-  api.use('zodiase:material-design-icons-fonts@3.0.1','client');
+  api.use('meteormogul:material-design-icons-fonts@3.0.1','client');
 
   api.addFiles([
     'accounts-vuetify.css',

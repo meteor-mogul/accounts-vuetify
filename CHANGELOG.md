@@ -1,5 +1,10 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.8] - 2018-03-02
+
+- Use meteormogul:vuetify-dist
+- Use meteormogul:material-design-icons-fonts
+
 ## [0.0.7] - 2018-03-01
 
 - Fix onTest api.use of this package
