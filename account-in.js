@@ -57,6 +57,10 @@ var loginButtonsLoggedIn = Vue.component('logged-in',
     hideDropdown: function () {
       MMDEBUG && console.log('closeDropdown');
       loginButtonsSession.closeDropdown();
+    },
+    logout: function () {
+      Meteor.logout();
+      loginButtonsSession.closeDropdown();
     }
   }
 }
@@ -76,4 +80,4 @@ var _loginButtonsInActions = Vue.component('logged-in-actions',
 }
 );
 
-export { meteormogulLoggedIn };
+export { loginButtonsLoggedIn };

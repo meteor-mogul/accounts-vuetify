@@ -6,7 +6,7 @@ import { Vue } from 'meteor/meteormogul:vue-dist';
 import VueMeteorTracker from 'vue-meteor-tracker';
 import Vuetify from 'vuetify';
 import { Accounts } from './account-session.js';
-import { getLoginServices } from './helpers.js';
+import { getLoginServices, elementValueById, validateEmail, validatePassword, login, signup } from './helpers.js';
 import { loginButtonsMessages } from './account-components.js';
 
 Vue.use(VueMeteorTracker);
@@ -22,14 +22,16 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
     return {
       dropdownVisible: false,
       loggingIn: false,
-      inCreateAccountFlow: false
+      inSignupFlow: false,
+      errorMessage: null,
+      infoMessage: null
     };
   },
   meteor: {
     loggingIn: {
       update() {
-        return this.loggingIn;
-        // return Meteor.loggingIn();
+        this.loggingIn;
+        //return Meteor.loggingIn();
       }
     },
     dropdownVisible: {
@@ -37,9 +39,19 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
         return loginButtonsSession.get('dropdownVisible');
       }
     },
-    inCreateAccountFlow: {
+    inSignupFlow: {
       update() {
-        return loginButtonsSession.get('inCreateAccountFlow');
+        return loginButtonsSession.get('inSignupFlow');
+      }
+    },
+    errorMessage: {
+      update() {
+        return loginButtonsSession.get('errorMessage');
+      }
+    },
+    infoMessage: {
+      update() {
+        return loginButtonsSession.get('infoMessage');
       }
     }
   },
@@ -54,19 +66,26 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
     },
     login: function () {
       MMDEBUG && console.log('login');
-      this.loggingIn = !this.loggingIn;
+      loginButtonsSession.resetMessages();
+      login();
     },
     createAccount: function () {
       MMDEBUG && console.log('create account');
-      loginButtonsSession.set('inCreateAccountFlow', true);
+      loginButtonsSession.resetMessages();
+      let email = elementValueById('login-email');
+      let password = elementValueById('login-password');
+      loginButtonsSession.set('inSignupFlow',
+      validateEmail(email) && validatePassword(password));
     },
     confirmAccount: function () {
       MMDEBUG && console.log('confirm account');
-      loginButtonsSession.closeDropdown();
+      loginButtonsSession.resetMessages();
+      signup();
     },
     cancelAccount: function () {
       MMDEBUG && console.log('cancel account');
-      loginButtonsSession.set('inCreateAccountFlow', false);
+      loginButtonsSession.resetMessages();
+      loginButtonsSession.set('inSignupFlow', false);
     }
   }
 });

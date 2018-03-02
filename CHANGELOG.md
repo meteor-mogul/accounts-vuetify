@@ -1,5 +1,9 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.6] - 2018-03-1
+
+- Get login and signup working
+
 ## [0.0.5] - 2018-03-01
 
 - Added style for logging in.

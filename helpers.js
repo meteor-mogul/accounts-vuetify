@@ -66,6 +66,42 @@ var trimmedElementValueById = function(id) {
     return element.value.replace(/^\s*|\s*$/g, ""); // trim() doesn't work on IE8;
 };
 
+// XXX improve these. should this be in accounts-password instead?
+//
+// XXX these will become configurable, and will be validated on
+// the server as well.
+validateUsername = function (username) {
+  if (username.length >= 3) {
+    return true;
+  } else {
+    loginButtonsSession.errorMessage("Username must be at least 3 characters long");
+    return false;
+  }
+};
+validateEmail = function (email) {
+  if (passwordSignupFields() === "USERNAME_AND_OPTIONAL_EMAIL" && email === '')
+    return true;
+
+  if (email.indexOf('@') !== -1) {
+    return true;
+  } else {
+    loginButtonsSession.errorMessage("Invalid email");
+    return false;
+  }
+};
+validatePassword = function (password) {
+  if (password.length >= 6) {
+    return true;
+  } else {
+    loginButtonsSession.errorMessage("Password must be at least 6 characters long");
+    return false;
+  }
+};
+
+passwordSignupFields = function () {
+  return Accounts.ui._options.passwordSignupFields || "EMAIL_ONLY";
+};
+
 var login = function () {
   MMDEBUG && console.log('login');
   loginButtonsSession.resetMessages();
@@ -87,7 +123,7 @@ var login = function () {
       loginButtonsSession.errorMessage("Invalid email");
       throw new Error("Invalid email");
     } else {
-      loginSelector = {username: email};
+      loginSelector = {email: email};
     }
   } else if (usernameOrEmail !== null) {
     // XXX not sure how we should validate this. but this seems good enough (for now),
@@ -97,7 +133,9 @@ var login = function () {
     else
       loginSelector = {username: usernameOrEmail};
   } else {
-    throw new Error("Unexpected -- no element to use as a login user selector");
+    let snafu = "Unexpected -- no element to use as a login user selector";
+    loginButtonsSession.errorMessage(snafu);
+    throw new Error(snafu);
   }
 
   Meteor.loginWithPassword(loginSelector, password, function (error, result) {
@@ -204,4 +242,11 @@ var matchPasswordAgainIfPresent = function () {
   return true;
 };
 
-export { displayName, getLoginServices, login, signup };
+var loginOrSignup = function () {
+  if (loginButtonsSession.get('inSignupFlow'))
+    signup();
+  else
+    login();
+};
+
+export { displayName, getLoginServices, elementValueById, validateEmail, validatePassword, login, signup, loginOrSignup };

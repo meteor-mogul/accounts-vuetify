@@ -30,7 +30,7 @@ LoginButtons = Vue.component('account-login',
       displayName: null,
       loginServices: 0,
       dropdownVisible: false,
-      inCreateAccountFlow: false
+      inSignupFlow: false
     };
   },
   meteor: {
@@ -67,9 +67,9 @@ LoginButtons = Vue.component('account-login',
         return loginButtonsSession.get('dropdownVisible');
       }
     },
-    inCreateAccountFlow: {
+    inSignupFlow: {
       update() {
-        return loginButtonsSession.get('inCreateAccountFlow');
+        return loginButtonsSession.get('inSignupFlow');
       }
     }
   }
@@ -88,7 +88,7 @@ var _loginButtonsSelector = Vue.component('login-selector',
     'displayName',
     'loginServices',
     'dropdownVisible',
-    'inCreateAccountFlow'
+    'inSignupFlow'
   ],
   render: function (createElement, context) {
     function selectComponent(currentUser,loginServices) {
@@ -96,6 +96,7 @@ var _loginButtonsSelector = Vue.component('login-selector',
       MMDEBUG && console.log('current user', currentUser);
       if (currentUser) {
         // We're already logged in.
+        MMDEBUG && console.log("show component", loginButtonsLoggedIn);
         return loginButtonsLoggedIn;
       } else {
         MMDEBUG && console.log('no current user');
@@ -122,7 +123,7 @@ var _loginButtonsSelector = Vue.component('login-selector',
             displayName: context.props.displayName,
             loginServices: context.props.loginServices,
             dropdownVisible: context.props.dropdownVisible,
-            inCreateAccountFlow: context.props.inCreateAccountFlow
+            inSignupFlow: context.props.inSignupFlow
           }
         },
         context.children
