@@ -1,6 +1,6 @@
 Package.describe({
   name: 'meteormogul:accounts-vuetify',
-  version: '0.0.6',
+  version: '0.0.7',
   // Brief, one-line summary of the package.
   summary: 'Accounts for Meteor Mogul using vuetify.',
   // URL to the Git repository containing the source code for this package.
@@ -51,6 +51,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('accounts-vuetify');
+  api.use('meteormogul:accounts-vuetify');
   api.mainModule('accounts-vuetify-tests.js');
 });

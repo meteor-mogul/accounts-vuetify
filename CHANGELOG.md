@@ -1,6 +1,10 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
-## [0.0.6] - 2018-03-1
+## [0.0.7] - 2018-03-01
+
+- Fix onTest api.use of this package
+
+## [0.0.6] - 2018-03-01
 
 - Get login and signup working
 
