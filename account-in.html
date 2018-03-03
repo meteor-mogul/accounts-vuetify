@@ -1,11 +1,9 @@
 <body>
   <script type="text/x-template" id="logged-in-template">
-    <div id="account">
-      <v-app id="logout">
-        <v-content>
-      <a class="login-link-text" id="login-name-link" @click="showDropdown">
+    <v-content>
+      <v-chip class="login-link-text" id="login-name-link" @click="showDropdown">
         {{displayName}} ▾
-      </a>
+      </v-chip>
       <v-btn @click="logout()">Logout</v-btn>
 
       <div v-if="dropdownVisible">
@@ -26,8 +24,6 @@
         </div>
       </div>
     </v-content>
-    </v-app>
-    </div>
   </script>
 
   <script type="text/x-template" id="change-password-template">

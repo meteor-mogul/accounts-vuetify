@@ -1,7 +1,5 @@
 <body>
   <script type="text/x-template" id="logged-out-with-services-template">
-    <div id="account">
-      <v-app id="login">
         <v-content>
           <v-btn dark @click="showDropdown">Login or Sign Up</v-btn>
           <v-dialog v-model="dropdownVisible" persistent max-width="500px">
@@ -51,17 +49,11 @@
             </div>
           </div>
         </v-content>
-      </v-app>
-    </div>
   </script>
 
   <script type="text/x-template" id="logged-out-no-services-template">
-    <div id="account">
-      <v-app id="login">
         <v-content>
           <v-btn dark>Login Unavailable</v-btn>
         </v-content>
-      </v-app>
-    </div>
   </script>
 </body>

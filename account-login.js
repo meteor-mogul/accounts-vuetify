@@ -19,7 +19,7 @@ Vue.use(Vuetify);
 
 loginButtonsSession = Accounts._loginButtonsSession;
 
-LoginButtons = Vue.component('account-login',
+LoginButton = Vue.component('account-login',
 {
   name: 'account-login',
   template: '#account-login-template',
@@ -132,4 +132,4 @@ var _loginButtonsSelector = Vue.component('login-selector',
 }
 );
 
-export { LoginButtons };
+export { LoginButton };

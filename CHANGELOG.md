@@ -1,5 +1,9 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.9] - 2018-03-02
+
+- Assume login buttons will be part of a larger v-app
+
 ## [0.0.8] - 2018-03-02
 
 - Use meteormogul:vuetify-dist
