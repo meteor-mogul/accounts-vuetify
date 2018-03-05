@@ -50,6 +50,10 @@ var loginButtonsLoggedIn = Vue.component('logged-in',
       }
   },
   methods: {
+    toggleDropdown: function () {
+      MMDEBUG && console.log('showDropdown');
+      loginButtonsSession.set('dropdownVisible', !loginButtonsSession.get('dropdownVisible'));
+    },
     showDropdown: function () {
       MMDEBUG && console.log('showDropdown');
       loginButtonsSession.set('dropdownVisible', true);
@@ -76,7 +80,26 @@ var _loginButtonsChangePassword = Vue.component('change-password',
 var _loginButtonsInActions = Vue.component('logged-in-actions',
 {
   name: 'logged-in-actions',
-  template: "#logged-in-actions-template"
+  template: "#logged-in-actions-template",
+  methods: {
+    toggleDropdown: function () {
+      MMDEBUG && console.log('showDropdown');
+      loginButtonsSession.set('dropdownVisible', !loginButtonsSession.get('dropdownVisible'));
+    },
+    showDropdown: function () {
+      MMDEBUG && console.log('showDropdown');
+      loginButtonsSession.set('dropdownVisible', true);
+    },
+    hideDropdown: function () {
+      MMDEBUG && console.log('closeDropdown');
+      loginButtonsSession.closeDropdown();
+    },
+    logout: function () {
+      Meteor.logout();
+      loginButtonsSession.closeDropdown();
+    }
+  }
+
 }
 );
 

@@ -1,15 +1,27 @@
 <body>
   <script type="text/x-template" id="logged-in-template">
-    <v-content>
-      <v-chip class="login-link-text" id="login-name-link" @click="showDropdown">
-        {{displayName}} ▾
+    <v-menu
+      id="account-menu"
+      :close-on-click="false"
+      :close-on-content-click="false"
+      v-model="dropdownVisible"
+    >
+      <v-chip
+        id="account-chip"
+        @click="toggleDropdown()"
+        slot="activator"
+      >{{displayName}}
+        <v-icon v-if="dropdownVisible">expand_more</v-icon>
+        <v-icon v-if="!dropdownVisible">chevron_right</v-icon>
       </v-chip>
-      <v-btn @click="logout()">Logout</v-btn>
-
-      <div v-if="dropdownVisible">
-        <div id="login-dropdown-list" class="accounts-dialog">
-          <a class="login-close-text" @click="hideDropdown">Close</a>
-          <div class="login-close-text-clear"></div>
+      <v-card v-if="dropdownVisible" class="elevation-12">
+        <v-toolbar dark color="primary">
+          <v-btn icon @click="hideDropdown()" dark>
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Manage Account</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
           <div v-if="inMessageOnlyFlow">
             <login-messages></login-messages>
           </div>
@@ -21,9 +33,9 @@
               <logged-in-actions></logged-in-actions>
             </div>
           </div>
-        </div>
-      </div>
-    </v-content>
+        </v-card-text>
+      </v-card>
+    </v-menu>
   </script>
 
   <script type="text/x-template" id="change-password-template">
@@ -31,6 +43,9 @@
   </script>
 
   <script type="text/x-template" id="logged-in-actions-template">
-    <div>logged in actions</div>
+    <div>
+      <v-btn @click="logout()">Logout</v-btn>
+      <p>Other logged in actions</p>
+    </div>
   </script>
 </body>

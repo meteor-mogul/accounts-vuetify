@@ -1,5 +1,9 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.10] - 2018-03-04
+
+- Use v-menu for login and account management
+
 ## [0.0.9] - 2018-03-02
 
 - Assume login buttons will be part of a larger v-app

@@ -13,6 +13,6 @@ So Meteor Mogul apps can have users.
 
 From a shell, `meteor add meteormogul:accounts-vuetify`, or edit your `.meteor/packages` file manually to add `meteormogul:accounts-vuetify`.
 
-Then you can use a LoginButton Vue component in your app to allow users to login and logout.
+Then you can use an <account-login> Vue component in your app to allow users to login and logout.
 
 ## Demo

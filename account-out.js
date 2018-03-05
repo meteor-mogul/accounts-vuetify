@@ -56,6 +56,10 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
     }
   },
   methods: {
+    toggleDropdown: function () {
+      MMDEBUG && console.log('showDropdown');
+      loginButtonsSession.set('dropdownVisible', !loginButtonsSession.get('dropdownVisible'));
+    },
     showDropdown: function () {
       MMDEBUG && console.log('showDropdown');
       loginButtonsSession.set('dropdownVisible', true);

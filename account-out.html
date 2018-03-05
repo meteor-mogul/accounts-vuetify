@@ -1,59 +1,68 @@
 <body>
   <script type="text/x-template" id="logged-out-with-services-template">
-        <v-content>
-          <v-btn dark @click="showDropdown">Login or Sign Up</v-btn>
-          <v-dialog v-model="dropdownVisible" persistent max-width="500px">
-            <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-btn icon @click.native="hideDropdown()" dark>
-                  <v-icon>close</v-icon>
-                </v-btn>
-                <v-toolbar-title>Login or Sign Up</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <div>&nbsp;<span v-if="errorMessage">{{errorMessage}}</span></div>
-                <div>&nbsp;<span v-if="infoMessage">{{infoMessage}}</span></div>
-                <v-form>
-                  <v-text-field id="login-email"
-                    prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
-                  <v-text-field id="login-password"
-                    prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
-                  <div v-if="inSignupFlow">
-                    <v-text-field id="login-password-again"
-                      prepend-icon="lock" name="password" label="Confirm Password" type="password"></v-text-field>
-                  </div>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <div v-if="inSignupFlow">
-                    <v-btn color="primary" @click="confirmAccount()">Create Account</v-btn>
-                    <v-btn color="cancel" @click="cancelAccount()">Cancel</v-btn>
-                </div>
-                <div v-else>
-                  <div v-if="loggingIn">
-                    <v-btn class="loading login-buttons-padding">&nbsp;</v-btn>
-                  </div>
-                  <div v-if="!loggingIn">
-                    <v-btn color="primary" @click="login()">Login</v-btn> or
-                    <v-btn color="primary" @click="createAccount()">Create New Account</v-btn>
-                  </div>
-                </div>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <div v-if="loggingIn && !dropdownVisible">
-              <!-- Not normally visible, but if the user closes the dropdown during login. -->
-              <div>
-                <div class="loading login-buttons-padding">&nbsp;</div>
+    <v-menu
+      id="login-menu"
+      :close-on-click="false"
+      :close-on-content-click="false"
+      v-model="dropdownVisible"
+    >
+      <v-chip
+        @click="toggleDropdown()"
+        slot="activator"
+      >Login or Sign Up
+        <v-icon v-if="dropdownVisible">expand_more</v-icon>
+        <v-icon v-if="!dropdownVisible">chevron_right</v-icon>
+      </v-chip>
+      <v-card v-if="dropdownVisible" class="elevation-12">
+        <v-toolbar dark color="primary">
+          <v-btn icon @click.native="hideDropdown()" dark>
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Login or Sign Up</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+          <div>&nbsp;<span v-if="errorMessage">{{errorMessage}}</span></div>
+          <div>&nbsp;<span v-if="infoMessage">{{infoMessage}}</span></div>
+          <v-form>
+            <v-text-field id="login-email"
+            prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
+            <v-text-field id="login-password"
+            prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+            <div v-if="inSignupFlow">
+              <v-text-field id="login-password-again"
+              prepend-icon="lock" name="password" label="Confirm Password" type="password"></v-text-field>
+            </div>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <div v-if="inSignupFlow">
+            <v-btn color="primary" @click="confirmAccount()">Create Account</v-btn>
+            <v-btn color="cancel" @click="cancelAccount()">Cancel</v-btn>
+          </div>
+          <div v-else>
+            <div v-if="loggingIn">
+              <v-btn class="loading login-buttons-padding">&nbsp;</v-btn>
+            </div>
+            <div v-if="!loggingIn">
+              <v-btn color="primary" @click="login()">Login</v-btn> or
+              <v-btn color="primary" @click="createAccount()">Create New Account</v-btn>
             </div>
           </div>
-        </v-content>
+        </v-card-actions>
+      </v-card>
+      <div v-if="loggingIn && !dropdownVisible">
+        <!-- Not normally visible, but if the user closes the dropdown during login. -->
+        <v-card>
+          <v-card-text class="loading login-buttons-padding">&nbsp;</v-card-text>
+        </v-card>
+      </div>
+    </v-menu>
   </script>
 
   <script type="text/x-template" id="logged-out-no-services-template">
-        <v-content>
-          <v-btn dark>Login Unavailable</v-btn>
-        </v-content>
+    <v-content>
+      <v-btn dark>Login Unavailable</v-btn>
+    </v-content>
   </script>
 </body>
