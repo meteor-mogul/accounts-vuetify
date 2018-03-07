@@ -6,20 +6,23 @@
       :close-on-content-click="false"
       v-model="dropdownVisible"
     >
-      <v-chip
-        id="account-chip"
-        @click="toggleDropdown()"
-        slot="activator"
-      >{{displayName}}
-        <v-icon v-if="dropdownVisible">expand_more</v-icon>
-        <v-icon v-if="!dropdownVisible">chevron_right</v-icon>
-      </v-chip>
+      <v-tooltip bottom slot="activator">
+        <v-btn
+          id="account-button"
+          @click="toggleDropdown()"
+          flat
+          slot="activator"
+          >
+            <v-icon>person</v-icon>
+        </v-btn>
+        <span>Manage account for {{displayName}}</span>
+      </v-tooltip>
       <v-card v-if="dropdownVisible" class="elevation-12">
         <v-toolbar dark color="primary">
           <v-btn icon @click="hideDropdown()" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Manage Account</v-toolbar-title>
+          <v-toolbar-title>{{displayName}}</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <div v-if="inMessageOnlyFlow">
@@ -43,9 +46,15 @@
   </script>
 
   <script type="text/x-template" id="logged-in-actions-template">
-    <div>
-      <v-btn @click="logout()">Logout</v-btn>
-      <p>Other logged in actions</p>
-    </div>
+    <v-list>
+      <v-list-tile>
+        <v-list-tile-content>Manage account</v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile>
+        <v-list-tile-action>
+          <v-btn @click="logout()">Logout</v-btn>
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-list>
   </script>
 </body>

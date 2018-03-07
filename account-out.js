@@ -24,6 +24,7 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
       loggingIn: false,
       inSignupFlow: false,
       errorMessage: null,
+      errorAlert: false,
       infoMessage: null
     };
   },
@@ -47,6 +48,11 @@ var loginButtonsLoggedOutWithServices = Vue.component('logged-out-with-services'
     errorMessage: {
       update() {
         return loginButtonsSession.get('errorMessage');
+      }
+    },
+    errorAlert: {
+      update() {
+        return loginButtonsSession.get('errorAlert');
       }
     },
     infoMessage: {

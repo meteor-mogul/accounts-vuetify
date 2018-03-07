@@ -14,6 +14,7 @@ var VALID_KEYS = [
   'inMessageOnlyFlow',
 
   'errorMessage',
+  'errorAlert',
   'infoMessage',
 
   // dialogs with messages (info and error)
@@ -143,12 +144,14 @@ Accounts._loginButtonsSession = {
 
   infoMessage: function(message) {
     this._set("errorMessage", null);
+    this._set("errorAlert", false);
     this._set("infoMessage", message);
     this.ensureMessageVisible();
   },
 
   errorMessage: function(message) {
     this._set("errorMessage", message);
+    this._set("errorAlert", true);
     this._set("infoMessage", null);
     this.ensureMessageVisible();
   },
@@ -170,6 +173,7 @@ Accounts._loginButtonsSession = {
 
   resetMessages: function () {
     this._set("errorMessage", null);
+    this._set("errorAlert", false);
     this._set("infoMessage", null);
   },
 

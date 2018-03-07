@@ -1,5 +1,9 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.11] - 2018-03-06
+
+- Use button for login and icon for account management
+
 ## [0.0.10] - 2018-03-04
 
 - Use v-menu for login and account management

@@ -6,47 +6,90 @@
       :close-on-content-click="false"
       v-model="dropdownVisible"
     >
-      <v-chip
+      <v-tooltip bottom slot="activator">
+        <v-btn
+        id="login-button"
         @click="toggleDropdown()"
+        flat
         slot="activator"
-      >Login or Sign Up
-        <v-icon v-if="dropdownVisible">expand_more</v-icon>
-        <v-icon v-if="!dropdownVisible">chevron_right</v-icon>
-      </v-chip>
+        >Login</v-btn>
+        <span>Login or Sign Up</span>
+      </v-tooltip>
       <v-card v-if="dropdownVisible" class="elevation-12">
         <v-toolbar dark color="primary">
           <v-btn icon @click.native="hideDropdown()" dark>
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Login or Sign Up</v-toolbar-title>
+          <v-btn icon dark>
+            <v-tooltip bottom>
+              <v-icon slot="activator">help</v-icon>
+              <span>Login to an existing account, or Sign Up to create a new account.</span>
+            </v-tooltip>
+          </v-btn>
         </v-toolbar>
         <v-card-text>
-          <div>&nbsp;<span v-if="errorMessage">{{errorMessage}}</span></div>
-          <div>&nbsp;<span v-if="infoMessage">{{infoMessage}}</span></div>
+          <v-alert
+            dismissible
+            type="error"
+            v-model="errorAlert"
+            transition="scale-transition"
+          >{{errorMessage}}</v-alert>
           <v-form>
-            <v-text-field id="login-email"
-            prepend-icon="person" name="email" label="Email" type="text"></v-text-field>
-            <v-text-field id="login-password"
-            prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+            <v-text-field
+              id="login-email"
+              prepend-icon="person"
+              name="email"
+              label="Email"
+              type="text"></v-text-field>
+            <v-text-field
+              id="login-password"
+              prepend-icon="lock"
+              name="password"
+              label="Password"
+              type="password"></v-text-field>
             <div v-if="inSignupFlow">
-              <v-text-field id="login-password-again"
-              prepend-icon="lock" name="password" label="Confirm Password" type="password"></v-text-field>
+              <v-text-field
+                id="login-password-again"
+                prepend-icon="lock"
+                name="password"
+                label="Confirm Password"
+                type="password"></v-text-field>
             </div>
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <div v-if="inSignupFlow">
-            <v-btn color="primary" @click="confirmAccount()">Create Account</v-btn>
-            <v-btn color="cancel" @click="cancelAccount()">Cancel</v-btn>
+            <v-btn
+              color="secondary"
+              @click="confirmAccount()">Create Account</v-btn>
+            <v-btn
+              color="cancel"
+              @click="cancelAccount()">Cancel</v-btn>
           </div>
           <div v-else>
             <div v-if="loggingIn">
               <v-btn class="loading login-buttons-padding">&nbsp;</v-btn>
             </div>
             <div v-if="!loggingIn">
-              <v-btn color="primary" @click="login()">Login</v-btn> or
-              <v-btn color="primary" @click="createAccount()">Create New Account</v-btn>
+              <v-tooltip bottom>
+                <v-btn
+                  slot="activator"
+                  color="primary"
+                  @click="login()"
+                  >Login</v-btn>
+                <span>Login to existing account</span>
+              </v-tooltip>
+              - or -
+              <v-tooltip bottom>
+                <v-btn
+                  slot="activator"
+                  color="secondary"
+                  @click="createAccount()"
+                  >Sign Up</v-btn>
+                <span>Create New Account</span>
+              </v-tooltip>
             </div>
           </div>
         </v-card-actions>
