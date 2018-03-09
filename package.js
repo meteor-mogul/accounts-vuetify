@@ -1,6 +1,6 @@
 Package.describe({
   name: 'meteormogul:accounts-vuetify',
-  version: '0.0.11',
+  version: '0.0.12',
   // Brief, one-line summary of the package.
   summary: 'Accounts for Meteor Mogul using vuetify.',
   // URL to the Git repository containing the source code for this package.
@@ -24,10 +24,12 @@ Package.onUse(function(api) {
   api.use('accounts-password@1.5.0', {weak: true});
 
   // Allow us to use VueJS components on the client
-  api.use('meteormogul:vue-dist@2.5.15', 'client');
+  api.use('meteormogul:vue-dist@2.5.16', 'client');
 
-  // Allow us to Vuetify VueJS components on the client
-  api.use('meteormogul:vuetify-dist@1.0.4', 'client');
+  // Allow us to use Vuetify VueJS components on the client
+  api.use('meteormogul:vuetify-dist@1.0.5');
+  // Make sure Vuetify package is available to app
+  api.imply('meteormogul:vuetify-dist@1.0.5');
 
   // Don't compile Blaze templates in .html files
   api.use('static-html@1.2.2', 'client');

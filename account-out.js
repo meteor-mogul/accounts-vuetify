@@ -4,7 +4,7 @@ MMDEBUG = true;
 import { Meteor } from 'meteor/meteor';
 import { Vue } from 'meteor/meteormogul:vue-dist';
 import VueMeteorTracker from 'vue-meteor-tracker';
-import Vuetify from 'vuetify';
+import { Vuetify } from 'meteor/meteormogul:vuetify-dist';
 import { Accounts } from './account-session.js';
 import { getLoginServices, elementValueById, validateEmail, validatePassword, login, signup } from './helpers.js';
 import { loginButtonsMessages } from './account-components.js';
