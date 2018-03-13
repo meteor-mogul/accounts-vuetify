@@ -1,5 +1,9 @@
 # Changelog for Meteor Mogul accounts-vuetify
 
+## [0.0.13] - 2018-03-12
+
+- Update to vuetify 1.0.6
+
 ## [0.0.12] - 2018-03-08
 
 - Use vuetify 1.0.5
